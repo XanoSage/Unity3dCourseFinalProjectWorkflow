@@ -7,19 +7,19 @@ public class CharacterControllerMotion : MonoBehaviour
 	[SerializeField] private float _speedMotion;
 	[SerializeField] private float _speedRotation;
     [SerializeField] private Camera _camera;
+    [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private float _minimumX = -75f;
     [SerializeField] private float _maximumX = 75f;
     [SerializeField] private float _smoothTime = 3f;
     [SerializeField] private float _jumpForce = 50f;
 
-    private Rigidbody _rigidbody;
 
     private bool _canJump = true;
 	// Start is called before the first frame update
 	void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        //_rigidbody = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         _camera = GetComponentInChildren<Camera>();
@@ -68,7 +68,7 @@ public class CharacterControllerMotion : MonoBehaviour
     {
         var nextPosition = transform.position + direction * _speedMotion;
 
-		_rigidbody.position = Vector3.Lerp(transform.position, nextPosition, _smoothTime * Time.deltaTime);
+		transform.position = Vector3.Lerp(transform.position, nextPosition, _smoothTime * Time.deltaTime);
 	}
 
 	private void RotationCharacter(Vector3 direction)
