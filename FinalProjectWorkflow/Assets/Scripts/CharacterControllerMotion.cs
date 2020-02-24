@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterControllerMotion : MonoBehaviour
+public class CharacterControllerMotion : MonoBehaviour, IShootable
 {
 	[SerializeField] private float _speedMotion;
 	[SerializeField] private float _speedRotation;
@@ -14,8 +15,20 @@ public class CharacterControllerMotion : MonoBehaviour
     [SerializeField] private float _smoothTime = 3f;
     [SerializeField] private float _jumpForce = 50f;
 
-
+	[SerializeField] private FactoryController factoryController;
+	[SerializeField] private MainGameDataHolder mainGameDataHolder;
     private bool _canJump = true;
+
+	public event Action FireEvent;
+	public event Action GrenadeEvent;
+
+	private HumanController _humanController;
+
+	public void Init(HumanController humanController)
+	{
+		_humanController = humanController;
+	}
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -24,12 +37,16 @@ public class CharacterControllerMotion : MonoBehaviour
         Cursor.visible = true;
         _camera = GetComponentInChildren<Camera>();
 
+		_humanController = factoryController.CreateHuman(mainGameDataHolder.GetUserHuman(), this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+		{
+			RaiseFireEvent();
+		}
     }
 
 	private void FixedUpdate()
@@ -118,5 +135,26 @@ public class CharacterControllerMotion : MonoBehaviour
         {
             _canJump = true;
         }
+
+		if (collision.transform.CompareTag("Ammunition"))
+		{
+			var ammunition = collision.transform.GetComponent<AmmunitionPack>();
+			var ammunitionData = ammunition.GetAmmunition();
+			Debug.Log($"data: {ammunitionData}");
+			var weaponController = factoryController.GetWeaponController(ammunitionData.Item1[0], _humanController.Human);
+			_humanController.AddWeapon(weaponController);
+			ammunition.DestroyOnCollision();
+		}
     }
+	
+	private void AddWeapon(WeaponTypeBullet weaponTypeBullet)
+	{
+		//get weaponController by weapon type
+	}
+
+
+	private void RaiseFireEvent()
+	{
+		FireEvent?.Invoke();
+	}
 }

@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CouroutineBehaviour : MonoBehaviour
+public class CoroutineBehaviour : MonoBehaviour
 {
-	private static CouroutineBehaviour _instance;
+	private static CoroutineBehaviour _instance;
 
-	private static CouroutineBehaviour _instanceInner
+	private static CoroutineBehaviour _instanceInner
 	{
 		get
 		{
 			if (_instance == null)
 			{
 				var go = new GameObject("CouroutineBehaviour");
-				_instance = go.AddComponent<CouroutineBehaviour>();
+				_instance = go.AddComponent<CoroutineBehaviour>();
 			}
 			return _instance;
 		}

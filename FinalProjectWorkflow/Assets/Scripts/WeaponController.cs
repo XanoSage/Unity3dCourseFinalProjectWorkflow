@@ -64,7 +64,7 @@ public class WeaponController
 		_capacityCounter = bulletCount;
 		ChangeWeaponState(WeaponState.InReload);
 		//startReloadProcess
-		CouroutineBehaviour.DelayedAction(_weaponModel.ReloadTime, ReloadComplete);
+		CoroutineBehaviour.DelayedAction(_weaponModel.ReloadTime, ReloadComplete);
 	}
 
 	private void ReloadComplete()
