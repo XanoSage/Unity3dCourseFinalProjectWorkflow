@@ -17,7 +17,8 @@ public class PoolInitializer : MonoBehaviour
         {
             for (int i = 0; i < initializerData.Count; i++)
             {
-                PoolManager.PutGameObjectToPool(initializerData.Prefab);
+				var go = Instantiate(initializerData.Prefab);
+                PoolManager.PutGameObjectToPool(go);
             }
         }
     }

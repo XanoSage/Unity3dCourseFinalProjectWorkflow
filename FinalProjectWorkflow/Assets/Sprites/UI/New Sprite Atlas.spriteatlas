@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Sprite Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 513b4d4b3afb94872a3fee36f2221f28, type: 3}
+    - {fileID: 102900000, guid: dc1ff96b67dc941968e256876a281e5c, type: 3}
+    totalSpriteSurfaceArea: 1039841
+    bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: c401c7506189c9da1130264e9032704b
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 6ef16c101577e437084ba04f0bfca226, type: 3}
+  - {fileID: 21300000, guid: b5c2be21ddc7b4fc2876dce9d666b12a, type: 3}
+  - {fileID: 21300000, guid: a557ab613d33f427a870f990be939f28, type: 3}
+  - {fileID: 21300000, guid: a273ce23ebc3f4d47bd3a5ed5f7f5464, type: 3}
+  - {fileID: 21300000, guid: 75b56263eb1fb46148f09608a8515a19, type: 3}
+  - {fileID: 21300000, guid: 709d74738afe84eb98d1388c4db87f92, type: 3}
+  - {fileID: 21300000, guid: e149192683691413a98b0a409685e1ff, type: 3}
+  - {fileID: 21300000, guid: f3ea32f60c24c4f42be61b13d66cd218, type: 3}
+  - {fileID: 21300000, guid: 346d370b83d3544a5923ffeabf3f8b0f, type: 3}
+  - {fileID: 21300000, guid: 513b4d4b3afb94872a3fee36f2221f28, type: 3}
+  - {fileID: 21300000, guid: bf38004c918aa46e5bba6bbde32d42f9, type: 3}
+  - {fileID: 21300000, guid: 5ee4058ee994a4514b5035166a3c7091, type: 3}
+  - {fileID: 21300000, guid: 835e8d8ea07be445bb0dfcf6884e40fd, type: 3}
+  - {fileID: 21300000, guid: eb60c8fefefd44c38bbb65e13bb05e7a, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - GreyDarkRectangleButton
+  - YellowSquareButton
+  - GreenSquareButton
+  - YellowRectangleButton
+  - GreenRectangleButton
+  - BlueSquareButton
+  - GreySquareButton
+  - PinkRectangleButton
+  - OrangeRectangleButton
+  - Circle
+  - ShadowRectangleButton
+  - BlueRectangleButton
+  - PinkSquareButton
+  - ShadowSquareButton
+  m_Tag: New Sprite Atlas
+  m_IsVariant: 0

@@ -6,6 +6,8 @@ public class MainGameDataHolder : MonoBehaviour
 {
 	[SerializeField] private List<WeaponModel> _weapons;
 	[SerializeField] private List<HumanModel> _humans;
+
+	//[SerializeField] private List<WeaponTypeBullet> _bu
     // Start is called before the first frame update
     void Start()
     {
@@ -29,4 +31,6 @@ public class MainGameDataHolder : MonoBehaviour
 		var result = _weapons.Find(model=> model.WeaponType == weaponType);
 		return result;
 	}
+
+	
 }

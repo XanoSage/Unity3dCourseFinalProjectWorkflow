@@ -38,7 +38,12 @@ public class PoolManager
 
     public static void PutGameObjectToPool(GameObject target)
     {
-        _poolDictionary[target.name].AddFirst(target);
+		if (!_poolDictionary.ContainsKey(target.name))
+		{
+			_poolDictionary[target.name] = new LinkedList<GameObject>();
+		}
+
+		_poolDictionary[target.name].AddFirst(target);
         target.transform.SetParent(_poolParent);
         target.SetActive(false);
     }

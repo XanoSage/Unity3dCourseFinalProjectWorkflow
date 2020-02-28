@@ -49,6 +49,8 @@ public class CharacterControllerMotion : MonoBehaviour, IShootable
 		}
     }
 
+
+
 	private void FixedUpdate()
 	{
 		if (Input.GetKey(KeyCode.W))
