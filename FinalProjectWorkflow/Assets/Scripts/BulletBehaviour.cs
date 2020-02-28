@@ -7,10 +7,14 @@ public class BulletBehaviour : MonoBehaviour
 	[SerializeField] private WeaponTypeBullet BulletType;
 	private BulletModel _bulletModel;
 	private bool _isActive;
-	public void Init(BulletModel bullet)
-	{
-		_bulletModel = bullet;
-	}
+
+    private BulletShootInfo _bulletShootInfo;
+	public void Init(BulletShootInfo bulletShootInfo)
+    {
+        _bulletShootInfo = bulletShootInfo;
+		_bulletModel = _bulletShootInfo.Bullet;
+        _isActive = true;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +39,7 @@ public class BulletBehaviour : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit))
 		{
+			Debug.Log($"[CheckHit], go: {hit.transform.name}, tag: {hit.transform.tag}");
 			if (hit.transform.CompareTag("Human"))
 			{
 				var healthSystem = hit.transform.GetComponent<HealthSystemLogic>();
@@ -46,9 +51,16 @@ public class BulletBehaviour : MonoBehaviour
 					{
 						//post death event
 					}
+                }
+            }
 
-				}
-			}
+			Destroy(gameObject);
 		}
 	}
+
+    private void ReturnToPool()
+    {
+        _isActive = false;
+		PoolManager.PutGameObjectToPool(gameObject);
+    }
 }

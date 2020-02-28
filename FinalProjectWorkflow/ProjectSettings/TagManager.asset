@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ammunition
   - Ground
+  - Human
   layers:
   - Default
   - TransparentFX

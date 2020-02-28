@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.EventAggregator;
 using UnityEngine;
 
 public enum WeaponState
@@ -10,72 +11,103 @@ public enum WeaponState
 }
 
 
-public class WeaponController 
+public class WeaponController
 {
-	private WeaponModel _weaponModel;
-	private HumanModel _owner;
-	private int _capacityCounter;
-	private int _currentBulletCounter;
+    public WeaponModel Weapon { get; }
+    public HumanModel Owner => _owner;
+
+    private HumanModel _owner;
+	private int _totalBulletInClipCounter;
+	private int _totalBulletCounter;
 	private float _reloadTimeCounter;
 	private WeaponState _weaponState = WeaponState.ReadyToFire;
+    private bool _shootAgain = true;
 
 	public event Action<BulletShootInfo> OnFire;
 
 	public WeaponController(WeaponModel weapon, HumanModel human)
 	{
-		_weaponModel = weapon;
+		Weapon = weapon;
 		_owner = human;
 	}
 
-	public void Fire()
+	public bool Fire()
 	{
-		if (_weaponState == WeaponState.InReload)
-			return;
+        if (!_shootAgain)
+            return false;
 
-		if (_currentBulletCounter <= 0)
-			return;
+        if (_weaponState == WeaponState.InReload)
+			return false;
 
-		if (_capacityCounter <= 0)
+       
+		if (_totalBulletInClipCounter <= 0 && _totalBulletCounter > 0)
 		{
 			Reload();
-		}
+            return false;
+        }
+
+        Debug.Log($"Fireee!, _totalBulletCounter: {_totalBulletCounter}, _totalBulletInClipCounter: {_totalBulletInClipCounter}, rate: {Weapon.FireRate}");
+
+		SetShootAgain(false);
 
 		//check for bullet count
-		_capacityCounter--;
-		if (_capacityCounter == 0)
+		_totalBulletInClipCounter--;
+		if (_totalBulletInClipCounter == 0)
 		{
-			Reload();
+            if (_totalBulletCounter > 0)
+            {
+                Reload();
+            }
+            else
+            {
+                return false;
+            }
 		}
-	}
+
+		CoroutineBehaviour.DelayedAction(Weapon.FireRate, () => SetShootAgain(true));
+		RaiseOnShootEvent();
+        return true;
+    }
+
+    public void FireUp()
+    {
+		SetShootAgain(true);
+    }
+
+    private void SetShootAgain(bool shootAgain)
+    {
+        _shootAgain = shootAgain;
+    }
 
 	public void AddBullet(int count)
 	{
-		_currentBulletCounter += count;
-		if (_currentBulletCounter > _weaponModel.MaxBulletCount)
+		_totalBulletCounter += count;
+		if (_totalBulletCounter > Weapon.MaxBulletCount)
 		{
-			_currentBulletCounter = _weaponModel.MaxBulletCount;
+			_totalBulletCounter = Weapon.MaxBulletCount;
 		}
 	}
 
-    private void Reload()
+    public void Reload()
 	{
-		var bulletCount = Mathf.Min(_currentBulletCounter, _weaponModel.Capacity);
-		_currentBulletCounter -= bulletCount;
-		_capacityCounter = bulletCount;
-		ChangeWeaponState(WeaponState.InReload);
-		//startReloadProcess
-		CoroutineBehaviour.DelayedAction(_weaponModel.ReloadTime, ReloadComplete);
+        ChangeWeaponState(WeaponState.InReload);
+		var bulletCount = Mathf.Min(_totalBulletCounter, Weapon.Capacity);
+		_totalBulletCounter -= bulletCount;
+		_totalBulletInClipCounter = bulletCount;
+        //startReloadProcess
+		CoroutineBehaviour.DelayedAction(Weapon.ReloadTime, ReloadComplete);
 	}
 
 	private void ReloadComplete()
 	{
 		ChangeWeaponState(WeaponState.ReadyToFire);
+		SetShootAgain(true);
 	}
 
 	private void Init()
 	{
-		_currentBulletCounter = _weaponModel.Capacity;
-		_capacityCounter = _currentBulletCounter;
+		_totalBulletCounter = Weapon.Capacity;
+		_totalBulletInClipCounter = _totalBulletCounter;
 	}
 
 	private void ChangeWeaponState(WeaponState state)
@@ -87,11 +119,12 @@ public class WeaponController
 	{
 		var shootInfo = new BulletShootInfo()
 		{
-			Bullet = _weaponModel.Bullet,
+			Bullet = Weapon.Bullet,
 			Owner = _owner
 		};
 
 		OnFire?.Invoke(shootInfo);
+		EventAggregator.Post(this,shootInfo);
 	}
 }
 

@@ -1,28 +1,27 @@
-﻿using EventAggregation;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.EventAggregator;
+using Assets.Scripts.Events;
 using UnityEngine;
-
-public class HealthPointChangeEvent: IEventBase
-{
-	public int HeaplthPoint;
-}
 
 public class HealthSystemLogic : MonoBehaviour
 {
 	public int HealthPoint = 100;
 
 	public bool DealDamage(int damage)
-	{
+    {
+        bool result = false;
 		//post DealDamage Event
 		HealthPoint -= damage;
-		PostHealthChangeEvent(HealthPoint);
+		
 		if (HealthPoint <= 0)
 		{
 			HealthPoint = 0;
-			return true;
+			result = true;
 		}
-		return false;
+
+        PostHealthChangeEvent(HealthPoint);
+		return result;
 	}
     // Start is called before the first frame update
     void Start()
@@ -46,6 +45,6 @@ public class HealthSystemLogic : MonoBehaviour
 
 	private void PostHealthChangeEvent(int healthPoint)
 	{
-		EventAggregator.Publish<HealthPointChangeEvent>(new HealthPointChangeEvent() { HeaplthPoint = healthPoint});
+        EventAggregator.Post<HealthPointChangeEvent>(this, new HealthPointChangeEvent() { HealthPoint = healthPoint});
 	}
 }

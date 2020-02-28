@@ -17,17 +17,28 @@ public class HumanController
 		_shootable = shootable;
 
 		_shootable.FireEvent += FireEventHandler;
+		_shootable.FireUpEvent += ShootableOnFireUpEvent;
 	}
 
-	public void AddWeapon(WeaponController weaponController)
+    private void ShootableOnFireUpEvent()
+    {
+        _weaponController?.FireUp();
+    }
+
+    public void AddWeapon(WeaponController weaponController)
 	{
 		_weaponController = weaponController;
+		_weaponController.AddBullet(weaponController.Weapon.Capacity);
+		_weaponController.Reload();
 	}
 
 	private void FireEventHandler()
 	{
+		
 		if (_weaponController == null)
 			return;
+
+
 		_weaponController.Fire();
 	}
 
@@ -38,5 +49,6 @@ public class HumanController
 public interface IShootable
 {
 	event Action FireEvent;
-	event Action GrenadeEvent;
+	event Action FireUpEvent;
+    event Action GrenadeEvent;
 }
