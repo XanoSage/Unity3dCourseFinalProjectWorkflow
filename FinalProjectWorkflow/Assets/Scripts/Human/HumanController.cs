@@ -10,6 +10,13 @@ public class HumanController
 	public HumanModel Human => _humanModel;
 	private IShootable _shootable;
 
+	public bool IsWeaponExist => _weaponController != null;
+	public bool IsWeaponClipEmpty => _weaponController.BulletInClip == 0;
+	public bool IsWeaponBulletEmpty => _weaponController.TotalBullet == 0;
+
+
+	public ControllingType HumanType => _humanModel.ControllType;
+
 	public HumanController(HumanModel humanModel, IShootable shootable)
 	{
 		_humanModel = humanModel;
@@ -27,9 +34,11 @@ public class HumanController
 
     public void AddWeapon(WeaponController weaponController)
 	{
-		_weaponController = weaponController;
+		if (_weaponController == null)
+			_weaponController = weaponController;
 		_weaponController.AddBullet(weaponController.Weapon.Capacity);
-		_weaponController.Reload();
+		if (_weaponController.BulletInClip == 0)
+			_weaponController.Reload();
 	}
 
 	private void FireEventHandler()

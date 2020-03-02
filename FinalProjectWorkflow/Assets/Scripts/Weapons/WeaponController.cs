@@ -15,8 +15,11 @@ public class WeaponController
 {
     public WeaponModel Weapon { get; }
     public HumanModel Owner => _owner;
+	public WeaponTypeBullet WeaponType => Weapon.WeaponType;
 
     private HumanModel _owner;
+	public int BulletInClip => _totalBulletInClipCounter;
+	public int TotalBullet => _totalBulletCounter;
 	private int _totalBulletInClipCounter;
 	private int _totalBulletCounter;
 	private float _reloadTimeCounter;

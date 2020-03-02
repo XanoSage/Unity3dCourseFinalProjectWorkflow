@@ -11,17 +11,17 @@ public class ShootableComponent : MonoBehaviour, IShootable
 
     // Update is called once per frame
 
-    protected virtual void PostFireEvent()
+    public virtual void PostFireEvent()
     {
         FireEvent?.Invoke();
     }
 
-    protected virtual void PostGrenadeEvent()
+    public virtual void PostGrenadeEvent()
     {
         GrenadeEvent?.Invoke();
     }
 
-    protected virtual void PostFireUpEvent()
+    public virtual void PostFireUpEvent()
     {
         FireUpEvent?.Invoke();
     }

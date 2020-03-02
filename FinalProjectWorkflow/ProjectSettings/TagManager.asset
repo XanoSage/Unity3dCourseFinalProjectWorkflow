@@ -7,6 +7,11 @@ TagManager:
   - Ammunition
   - Ground
   - Human
+  - Weapon
+  - SecondCamera
+  - BulletSpawn
+  - LevelPart
+  - Dummie
   layers:
   - Default
   - TransparentFX
@@ -16,8 +21,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - PlayerSkin
+  - Wall
   - 
   - 
   - 

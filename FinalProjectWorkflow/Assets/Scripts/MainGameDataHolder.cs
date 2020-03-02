@@ -12,6 +12,12 @@ public class MainGameDataHolder : MonoBehaviour
     [SerializeField] private List<WeaponPrefabData> _weaponPrefabDataList;
     [SerializeField] private List<BulletPrefabData> _bulletPrefabDataList;
 
+    [SerializeField] private List<WeaponCrosshairData> _weaponCrosshairDataList;
+
+    [SerializeField] private SpawnPointsBehaviour _humanSpawnPoints;
+    [SerializeField] private SpawnPointsBehaviour _ammunitionSpawnPoints;
+
+
     private void Awake()
     {
         _instance = this;
@@ -19,9 +25,17 @@ public class MainGameDataHolder : MonoBehaviour
 
 	public HumanModel GetUserHuman()
 	{
-		var result = _humans.Find(human => human.ControllType == ControllingType.Player);
-		return result;
+        return GetHumanModelInner(ControllingType.Player);
 	}
+
+    public HumanModel GetAIModel() {
+        return GetHumanModelInner(ControllingType.AI);
+    }
+
+    private HumanModel GetHumanModelInner(ControllingType controllingType) {
+        var result = _humans.Find(human => human.ControllType == controllingType);
+        return result;
+    }
 
 	public WeaponModel GetWeaponModelInner(WeaponTypeBullet weaponType)
 	{
@@ -41,10 +55,17 @@ public class MainGameDataHolder : MonoBehaviour
         return result;
     }
 
-    public static HumanModel GetUserHumanModel()
+    public WeaponCrosshairData GetWeaponCrosshairDataInner(WeaponTypeBullet weapon) 
     {
-        return _instance.GetUserHuman();
+        var result = _weaponCrosshairDataList.Find(crosshairData => crosshairData.WeaponType == weapon);
+        return result;
     }
+
+    public static HumanModel GetHumanModel(ControllingType controllingType)
+    {
+        return _instance.GetHumanModelInner(controllingType);
+    }
+
 
     public static WeaponModel GetWeaponModel(WeaponTypeBullet weaponType)
     {
@@ -60,6 +81,13 @@ public class MainGameDataHolder : MonoBehaviour
     {
         return _instance.GetBulletPrefabDataInner(bullet);
     }
+
+    public static WeaponCrosshairData GetWeaponCrosshairData(WeaponTypeBullet weaponType) {
+        return _instance.GetWeaponCrosshairDataInner(weaponType);
+    }
+
+    public static SpawnPointsBehaviour HumanSpawnPoints => _instance._humanSpawnPoints;
+    public static SpawnPointsBehaviour AmminitionSpawnPoints => _instance._ammunitionSpawnPoints;
 }
 
 [Serializable]
@@ -74,4 +102,12 @@ public class BulletPrefabData
 {
     public WeaponTypeBullet Bullet;
     public BulletBehaviour Prefab;
+}
+
+
+[Serializable]
+public class WeaponCrosshairData
+{
+    public WeaponTypeBullet WeaponType;
+    public Sprite Crosshair;
 }

@@ -12,7 +12,7 @@ public class HumanBehaviour : MonoBehaviour
     public HumanController Human => _humanController;
     void Start()
     {
-        _humanController = FactoryController.CreateHumanController(MainGameDataHolder.GetUserHumanModel(), _shootableComponent);
+        _humanController = FactoryController.CreateHumanController(MainGameDataHolder.GetHumanModel(_controllingType), _shootableComponent);
     }
 
     // Update is called once per frame

@@ -14,4 +14,22 @@ namespace Assets.Scripts.Events
     {
         public int HealthPoint;
     }
+
+    public class GameStartEvent
+    { }
+
+    public class SpawnButtonClickEvent
+    { }
+
+    public class WeaponTakeEvent
+    {
+        public HumanModel Owner;
+        public WeaponModel Weapon;
+    }
+
+    public class WeaponAddedEvent
+    {
+        public HumanBehaviour Owner;
+        public WeaponController Weapon;
+    }
 }

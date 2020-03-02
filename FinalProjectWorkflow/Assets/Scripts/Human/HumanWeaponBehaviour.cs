@@ -1,14 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.EventAggregator;
+using Assets.Scripts.Events;
 using UnityEngine;
 
 
-public class WeaponAddedEvent
-{
-    public HumanBehaviour Owner;
-    public WeaponController Weapon;
-}
+
 public class HumanWeaponBehaviour : MonoBehaviour
 {
     [SerializeField] private Transform _parentForWeapons;

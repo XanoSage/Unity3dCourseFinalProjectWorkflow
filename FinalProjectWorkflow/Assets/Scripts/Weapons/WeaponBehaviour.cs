@@ -9,6 +9,8 @@ public class WeaponBehaviour : MonoBehaviour
     [SerializeField] private Transform _bulletStartPoint;
 	[SerializeField] private GameObject _parentForLight;
 
+    [SerializeField] private GameObject[] _muzzleFlashArray;
+
     private BulletBehaviour _bulletBehaviourPrefab;
     private WeaponController _weaponController;
     private Vector3 _position;
@@ -28,6 +30,7 @@ public class WeaponBehaviour : MonoBehaviour
 	{
         Debug.Log($"[{GetType().Name}][Fire] bullet: {bulletShootInfo.Bullet}, owner: {bulletShootInfo.Owner.Name}");        
         CreateBullet(bulletShootInfo);
+        CreateMuzzleFlash();
         SetLightActive(true);
 		CoroutineBehaviour.DelayedAction(0.1f, ()=> SetLightActive(false));
 	}
@@ -42,6 +45,16 @@ public class WeaponBehaviour : MonoBehaviour
         {
             bulletBehaviour.Init(bulletShootInfo);
         }
+    }
+
+    private void CreateMuzzleFlash() {
+        if (_muzzleFlashArray == null || _muzzleFlashArray.Length == 0)
+            return;
+
+        var index = UnityEngine.Random.Range(0, _muzzleFlashArray.Length);
+        var muzzleFlash = Instantiate(_muzzleFlashArray[index], _bulletStartPoint.position, _bulletStartPoint.rotation);
+        muzzleFlash.transform.SetParent(_bulletStartPoint);
+
     }
 	
     // Start is called before the first frame update

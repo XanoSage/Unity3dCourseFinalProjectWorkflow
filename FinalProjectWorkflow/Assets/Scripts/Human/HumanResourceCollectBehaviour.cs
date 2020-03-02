@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.EventAggregator;
+using Assets.Scripts.Events;
 using UnityEngine;
 
 public class HumanResourceCollectBehaviour : MonoBehaviour
@@ -25,6 +26,9 @@ public class HumanResourceCollectBehaviour : MonoBehaviour
 
         if (collision.transform.CompareTag("Ammunition"))
         {
+            if (_humanBehaviour.Human.IsWeaponExist)
+                return;
+
             var ammunition = collision.transform.GetComponent<AmmunitionPack>();
             var ammunitionData = ammunition.GetAmmunition();
             Debug.Log($"data: {ammunitionData}");
